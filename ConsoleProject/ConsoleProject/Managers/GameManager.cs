@@ -3,7 +3,7 @@
 public class GameManager
 {
     public static bool IsGameOver { get; set; }
-    public const string GameName = "아무튼 RPG";
+    public const string GameName = "괴물 3마리 잡기";
     private PlayerCharacter _player;
     public static string[] MonsterName = { "Slime", "Owl", "Rabbit" };
     

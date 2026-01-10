@@ -18,7 +18,8 @@ public class Portal : GameObject, IInteractable
     //플레이어의 정보와 portal[i]의 i를 전달 해야함.
     public void Interact(PlayerCharacter player)
     {
-        
-        SceneManager.Change("Combat", player, monsterId);
+        if(Monster.isAlive[monsterId]){
+            SceneManager.Change("Combat", player, monsterId);
+        }
     }
 }

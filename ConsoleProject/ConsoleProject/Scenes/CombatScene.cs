@@ -4,16 +4,13 @@ public class CombatScene : Scene
     public PlayerCharacter player;
     public int monsterId;  //몬스터 번호
     private bool IsActiveControl = true;
-    
+    private bool isPosionSelected = false;
     public CombatScene()
     {
         
         Init();
     }
     //전투를 하기 위해서는 우선 플레이어의 상태를 넘겨줘야 한다..
-    //healthGage, manaGage 넘겨주고 플레이어의 위치는 기억 해두고
-    //전투 종료시 or 몬스터 잡을 시 원래 플레이어의 위치로 내보내기
-    //
     public void Init()
     {
         
@@ -35,7 +32,11 @@ public class CombatScene : Scene
     }
     public override void Update()
     {
-        
+        if (player.IsActiveControl == false) 
+        {
+            player.Update(); 
+            return; // 전투 메뉴 조작은 스킵
+        }
         if (InputManager.GetKey(ConsoleKey.UpArrow))
         {
             
@@ -55,8 +56,13 @@ public class CombatScene : Scene
     
     public override void Render()
     {
-        Console.SetCursorPosition(5, 1);
+        player.DrawHealthGauge();
+        player.DrawManaGauge();
+        Console.SetCursorPosition(0, 4);
         Monster.MonsterName[monsterId].Print(ConsoleColor.Yellow);
+        Console.WriteLine();
+        Console.Write("체력: ");
+        Monster.health[monsterId].ToString().Print(ConsoleColor.Yellow);
         Console.WriteLine();
         for (int i = 0; i < Monster.monsterSprites.GetLength(1); i++)
         {
@@ -64,8 +70,14 @@ public class CombatScene : Scene
             Monster.monsterSprites[monsterId, i].Print(ConsoleColor.Yellow);
             Console.WriteLine();
         }
+        Console.SetCursorPosition(0, 10);
+        player.Render();
         
-        _combatMenu.Render(8, 10);
+        if (player.IsActiveControl)
+        {
+            _combatMenu.Render(8, 11);
+        }
+        
     }
 
     public override void Exit()
@@ -74,19 +86,60 @@ public class CombatScene : Scene
 
     public void Attack()
     {
-        
+        Monster.health[monsterId]--;
+        Console.SetCursorPosition(0, 10);
+        Console.WriteLine("몬스터를 공격했다!");
+        if (Monster.health[monsterId] <= 0)
+        {
+            Monster.isAlive[monsterId] = false;
+            if (Monster.isAlive[0] == false && Monster.isAlive[1] == false && Monster.isAlive[2] == false)
+            {
+                Console.Clear();
+                Console.SetCursorPosition(0, 10);
+                Console.WriteLine("게임 클리어!");
+                Thread.Sleep(1000);
+                GameManager.IsGameOver = true;
+            }
+            SceneManager.Change("Town");
+        }
+        Thread.Sleep(500);
+        Monster.MonsterAttack(player, monsterId);
     }
     
     public void Magic()
     {
+        if (player.Mana.Value <= 0)
+        {
+            Console.SetCursorPosition(0, 10);
+            Console.WriteLine("마나 부족");
+            return;
+        }
         
+        player.Mana.Value--;
+        Console.SetCursorPosition(0, 10);
+        Console.WriteLine("몬스터를 마법 공격했다!");
+        Monster.health[monsterId] = Monster.health[monsterId] -2;
+        if (Monster.health[monsterId] <= 0)
+        {
+            Monster.isAlive[monsterId] = false;
+            if (Monster.isAlive[0] == false && Monster.isAlive[1] == false && Monster.isAlive[2] == false)
+            {
+                Console.Clear();
+                Console.SetCursorPosition(0, 10);
+                Console.WriteLine("게임 클리어!");
+                Thread.Sleep(1000);
+                GameManager.IsGameOver = true;
+            }
+            SceneManager.Change("Town");
+        }
+        Thread.Sleep(500);
+        Monster.MonsterAttack(player, monsterId);
     }
 
     public void Posion()
     {
-        
         player.HandleControl();
-        player.Render();
+        Console.SetCursorPosition(0, 10);
     }
     public void Avoid()
     {

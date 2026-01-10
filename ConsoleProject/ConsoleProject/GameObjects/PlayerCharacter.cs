@@ -4,13 +4,13 @@ using System.Runtime.InteropServices.Marshalling;
 
 public class PlayerCharacter : GameObject
 {
-    public ObservableProperty<int> Health = new ObservableProperty<int>(5);
-    public ObservableProperty<int> Mana = new ObservableProperty<int>(5);
+    public ObservableProperty<int> Health = new ObservableProperty<int>(10);
+    public ObservableProperty<int> Mana = new ObservableProperty<int>(10);
     private string _healthGauge;
     private string _manaGauge;
     
     public Tile[,] Field { get; set; }
-    private Inventory _inventory;
+    public Inventory _inventory;
     public bool IsActiveControl { get; private set; }
 
     public PlayerCharacter() => Init();
@@ -193,6 +193,9 @@ public class PlayerCharacter : GameObject
                 break;
             case 1:
                 _manaGauge = "■□□□□□□□□□";
+                break;
+            case 0:
+                _manaGauge = "□□□□□□□□□□";
                 break;
         }
     }
