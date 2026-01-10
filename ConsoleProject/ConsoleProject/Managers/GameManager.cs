@@ -39,6 +39,7 @@ public void Run()
         SceneManager.AddScene("Story", new StoryScene());
         SceneManager.AddScene("Town", new TownScene(_player));
         SceneManager.AddScene("Log", new LogScene());
+        SceneManager.AddScene("Credit", new CreditScene());
         SceneManager.AddScene("Combat", new CombatScene());
         
         SceneManager.Change("Title");

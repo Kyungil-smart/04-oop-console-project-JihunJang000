@@ -2,7 +2,7 @@
 
 public class TownScene : Scene
 {
-    private Tile[,] _field = new Tile[10, 20];
+    private Tile[,] _field = new Tile[15, 20];
     private PlayerCharacter _player;
     
     public TownScene(PlayerCharacter player) => Init(player);
@@ -25,18 +25,38 @@ public class TownScene : Scene
     {
         //타운씬에서 테두리를 만들고 싶다..
         _player.Field = _field;
-        _player.Position = new Vector(10, 5);
+        _player.Position = new Vector(10, 10);
         _field[_player.Position.Y, _player.Position.X].OnTileObject = _player;
 
-        _field[5, 5].OnTileObject = new Potion() {Name = "Potion1"};
-        _field[4, 15].OnTileObject = new Potion() {Name = "Potion2"};
-        _field[7, 3].OnTileObject = new Potion() {Name = "Potion3"};
-        _field[9, 19].OnTileObject = new Potion() {Name = "Potion4"};
+        _field[9, 5].OnTileObject = new Potion() {Name = "Potion1"};
+        _field[8, 15].OnTileObject = new Potion() {Name = "Potion2"};
+        _field[11, 3].OnTileObject = new Potion() {Name = "Potion3"};
+        _field[13, 14].OnTileObject = new Potion() {Name = "Potion4"};
         
-        _field[4, 7].OnTileObject = new Portal(0) {Name = "Portal0"};
-        _field[6, 18].OnTileObject = new Portal(1) {Name = "Portal1"};
-        _field[8, 17].OnTileObject = new Portal(2) {Name = "Portal2"};
+        _field[8, 7].OnTileObject = new Portal(0) {Name = "Portal0"};
+        _field[10, 17].OnTileObject = new Portal(1) {Name = "Portal1"};
+        _field[12, 16].OnTileObject = new Portal(2) {Name = "Portal2"};
         
+        for (int i = 5; i < _field.GetLength(0); i++)
+        {
+            if (i == 5 || i==_field.GetLength(0) - 1)
+            {
+                for (int j = 0; j < _field.GetLength(1); j++)
+                {
+                    _field[i, j].OnTileObject = new Wall() { Symbol = '▤' };
+                }
+            }
+            else{   
+                for (int j = 0; j < _field.GetLength(1); j++)
+                {
+                    if (j == 0 || j == _field.GetLength(1) - 1)
+                    {
+                        _field[i, j].OnTileObject = new Wall() { Symbol = '|' };
+                    }
+                }
+            }
+            
+        }
         Debug.Log("타운 씬 진입");
     }
 

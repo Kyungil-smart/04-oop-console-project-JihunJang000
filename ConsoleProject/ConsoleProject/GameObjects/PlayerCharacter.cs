@@ -85,6 +85,11 @@ public class PlayerCharacter : GameObject
 
         GameObject nextTileObject = Field[nextPos.Y, nextPos.X].OnTileObject;
 
+        if (nextTileObject is Wall)
+        {
+            return;
+        }
+        
         if (nextTileObject != null)
         {
             if (nextTileObject is IInteractable)

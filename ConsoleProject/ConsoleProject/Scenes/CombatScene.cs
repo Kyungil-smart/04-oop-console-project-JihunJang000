@@ -103,7 +103,7 @@ public class CombatScene : Scene
             SceneManager.Change("Town");
         }
         Thread.Sleep(500);
-        Monster.MonsterAttack(player, monsterId);
+        Monster.MonsterAttack(player, Monster.attackDamage[monsterId]);
     }
     
     public void Magic()
@@ -133,7 +133,7 @@ public class CombatScene : Scene
             SceneManager.Change("Town");
         }
         Thread.Sleep(500);
-        Monster.MonsterAttack(player, monsterId);
+        Monster.MonsterAttack(player, Monster.attackDamage[monsterId]);
     }
 
     public void Posion()

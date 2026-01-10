@@ -65,5 +65,6 @@ public class TitleScene : Scene
 
     public void ViewCredits()
     {
+        SceneManager.Change("Credit");
     }
 }
