@@ -21,8 +21,8 @@ public class PlayerCharacter : GameObject
         IsActiveControl = true;
         Health.AddListener(SetHealthGauge);
         Mana.AddListener(SetManaGauge);
-        _healthGauge = "■■■■■";
-        _manaGauge = "■■■■■";
+        _healthGauge = "■■■■■■■■■■";
+        _manaGauge = "■■■■■■■■■■";
         _inventory = new Inventory(this);
     }
 
@@ -66,7 +66,7 @@ public class PlayerCharacter : GameObject
         }
     }
 
-    public void HandleControl()
+    public void HandleControl() //인벤토리 실행했을때 플레이어 못 움직이게 함.
     {
         _inventory.IsActive = !_inventory.IsActive;
         IsActiveControl = !_inventory.IsActive;
@@ -90,6 +90,7 @@ public class PlayerCharacter : GameObject
             if (nextTileObject is IInteractable)
             {
                 (nextTileObject as IInteractable).Interact(this);
+                if (Field == null) return;
             }
         }
 
@@ -112,13 +113,13 @@ public class PlayerCharacter : GameObject
 
     public void DrawManaGauge()
     {
-        Console.SetCursorPosition(Position.X - 2, Position.Y - 1);
-        _healthGauge.Print(ConsoleColor.Blue);
+        Console.SetCursorPosition(0, 2);
+        _manaGauge.Print(ConsoleColor.Blue);
     }
 
     public void DrawHealthGauge()
     {
-        Console.SetCursorPosition(Position.X - 2, Position.Y - 2);
+        Console.SetCursorPosition(0, 1);
         _healthGauge.Print(ConsoleColor.Red);
     }
 
@@ -126,20 +127,35 @@ public class PlayerCharacter : GameObject
     {
         switch (health)
         {
+            case 10:
+                _healthGauge = "■■■■■■■■■■";
+                break;
+            case 9:
+                _healthGauge = "■■■■■■■■■□";
+                break;
+            case 8:
+                _healthGauge = "■■■■■■■■□□";
+                break;
+            case 7:
+                _healthGauge = "■■■■■■■□□□";
+                break;
+            case 6:
+                _healthGauge = "■■■■■■□□□□";
+                break;
             case 5:
-                _healthGauge = "■■■■■";
+                _healthGauge = "■■■■■□□□□□";
                 break;
             case 4:
-                _healthGauge = "■■■■□";
+                _healthGauge = "■■■■□□□□□□";
                 break;
             case 3:
-                _healthGauge = "■■■□□";
+                _healthGauge = "■■■□□□□□□□";
                 break;
             case 2:
-                _healthGauge = "■■□□□";
+                _healthGauge = "■■□□□□□□□□";
                 break;
             case 1:
-                _healthGauge = "■□□□□";
+                _healthGauge = "■□□□□□□□□□";
                 break;
         }
     }
@@ -148,26 +164,42 @@ public class PlayerCharacter : GameObject
     {
         switch (mana)
         {
+            case 10:
+                _manaGauge = "■■■■■■■■■■";
+                break;
+            case 9:
+                _manaGauge = "■■■■■■■■■□";
+                break;
+            case 8:
+                _manaGauge = "■■■■■■■■□□";
+                break;
+            case 7:
+                _manaGauge = "■■■■■■■□□□";
+                break;
+            case 6:
+                _manaGauge = "■■■■■■□□□□";
+                break;
             case 5:
-                _healthGauge = "■■■■■";
+                _manaGauge = "■■■■■□□□□□";
                 break;
             case 4:
-                _healthGauge = "■■■■□";
+                _manaGauge = "■■■■□□□□□□";
                 break;
             case 3:
-                _healthGauge = "■■■□□";
+                _manaGauge = "■■■□□□□□□□";
                 break;
             case 2:
-                _healthGauge = "■■□□□";
+                _manaGauge = "■■□□□□□□□□";
                 break;
             case 1:
-                _healthGauge = "■□□□□";
+                _manaGauge = "■□□□□□□□□□";
                 break;
         }
     }
 
     public void Heal(int value)
     {
-        Health.Value += value;
+        Health.Value = 10;
+        Mana.Value = 10;
     }
 }

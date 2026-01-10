@@ -5,8 +5,9 @@ public class GameManager
     public static bool IsGameOver { get; set; }
     public const string GameName = "아무튼 RPG";
     private PlayerCharacter _player;
-
-    public void Run()
+    public static string[] MonsterName = { "Slime", "Owl", "Rabbit" };
+    
+public void Run()
     {
         Init();
         

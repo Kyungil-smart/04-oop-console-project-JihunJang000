@@ -21,16 +21,21 @@ public class TownScene : Scene
         }
     }
 
-    public override void Enter()
+    public override void Enter() 
     {
+        //타운씬에서 테두리를 만들고 싶다..
         _player.Field = _field;
-        _player.Position = new Vector(4, 2);
+        _player.Position = new Vector(10, 5);
         _field[_player.Position.Y, _player.Position.X].OnTileObject = _player;
 
-        _field[3, 5].OnTileObject = new Potion() {Name = "Potion1"};
-        _field[2, 15].OnTileObject = new Potion() {Name = "Potion2"};
+        _field[5, 5].OnTileObject = new Potion() {Name = "Potion1"};
+        _field[4, 15].OnTileObject = new Potion() {Name = "Potion2"};
         _field[7, 3].OnTileObject = new Potion() {Name = "Potion3"};
         _field[9, 19].OnTileObject = new Potion() {Name = "Potion4"};
+        
+        _field[4, 7].OnTileObject = new Portal(0) {Name = "Portal0"};
+        _field[6, 18].OnTileObject = new Portal(1) {Name = "Portal1"};
+        _field[8, 17].OnTileObject = new Portal(2) {Name = "Portal2"};
         
         Debug.Log("타운 씬 진입");
     }

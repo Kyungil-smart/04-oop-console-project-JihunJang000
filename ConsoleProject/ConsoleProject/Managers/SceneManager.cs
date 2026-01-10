@@ -27,7 +27,23 @@ public static class SceneManager
         
         Change(_scenes[key]);
     }
+    
+    public static void Change(string key, PlayerCharacter player, int monsterId)
+    {
+        if (!_scenes.ContainsKey(key)) return;
+        
+        Scene nextScene = _scenes[key];
 
+        
+        if (nextScene is CombatScene )
+        {
+            (nextScene as CombatScene).Setup(player, monsterId); // 아까 만든 함수 호출!
+        }
+        
+        Change(nextScene);
+    }
+
+    
     public static void Change(Scene scene)
     {
         Scene next = scene;
