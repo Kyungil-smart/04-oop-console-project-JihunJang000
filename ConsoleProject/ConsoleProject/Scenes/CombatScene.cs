@@ -10,7 +10,7 @@ public class CombatScene : Scene
         
         Init();
     }
-    //전투를 하기 위해서는 우선 플레이어의 상태를 넘겨줘야 한다..
+    
     public void Init()
     {
         
@@ -20,6 +20,8 @@ public class CombatScene : Scene
         _combatMenu.Add("포션", Posion);
         _combatMenu.Add("도망", Avoid);
     }
+    
+    //전투를 하기 위해서는 우선 플레이어의 상태를 넘겨줘야 한다..
     public void Setup(PlayerCharacter player, int monsterId)
     {
         this.player = player;
